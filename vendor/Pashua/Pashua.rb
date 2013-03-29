@@ -1,10 +1,6 @@
 # Ruby module to use Pashua (http://www.bluem.net/downloads/pashua_en/).
 # This module was contributed to the Pashua distribution by Mike Hall,
 # with some changes by Carsten Bluem.
-# Besides this module, there is a more "idiomatic", OOP-style implementation
-# contributed by Mike. You can find it on http://users.rcn.com/m3ha11/ruby/
-# The file is called "PashuaRuby-", followed by the version number.
-# At the time of this writing, it's PashuaRuby-0.2.tgz
 
 require 'tempfile'
 

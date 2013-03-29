@@ -1,0 +1,97 @@
+A Capella
+Acid
+Acid Jazz
+Acid Punk
+Alternative=Alternative,Alternative Rock
+Ambient=Ambient,Meditation
+Avantgarde
+Bass
+Bebop
+Bluegrass
+Blues
+Blues/R&B
+Bollywood
+Books & Spoken
+Booty Bass
+Bossa Nova
+Bubblegum
+Celtic
+Chamber Music
+Chanson=Chanson Francaise,Chanson,Chanson Française
+Childrenís Music
+Chorus
+Classic Rock
+Classical
+Comedy
+Country
+Dance
+Darkwave
+Death Metal
+Disco
+Drum Solo
+Duet
+Electronic=Electronic,Idm,Turntableism,Techno,Minimal,Big Beat,Breakbeat,House,Lounge,Electroclash,Drum And Bass,Chillout,Euro-House,Euro-Techno,Eurodance,Techno-Industrial
+Folk-Rock
+Folk=Folk,Folklore
+Funk
+Fusion
+Gospel
+Gothic
+Gothic Rock
+Grunge
+Gypsy Jazz=Gypsy Jazz,Manouche,Jazz Manouche,Jazz Swing,Gypsy Swing,Hot Club
+Hard Rock
+Hip Hop=Hip Hop,Hip Hop/Rap,Instrumental Hip Hop,Gangsta
+Holiday
+Humor
+Indie=Indie,Indie Rock,Indie Pop,Shoegaze,Post-Rock,Americana,Alt-Country,LoFi,Post-Punk,Indie Music
+Industrial
+Instrumental
+J-pop
+Jazz=Jazz,Big Band,Dixieland,Dixieland Jazz
+Klezmer
+Latin=Latin,Cuban,Cuba
+Metal
+Musical=Musical,Showtunes
+National Folk
+Native American
+New Age
+New Wave
+Oldies=Oldies,Doo Wop
+Opera=Opera,Operetta
+Pop=Pop,Pop Music,Sundazed
+Power Ballad
+Progressive Rock
+Psychedelic
+Psychedelic Rock
+Punk Rock
+Punk=Hardcore Punk,Punk
+R&B=R&B,Rnb
+Ragtime
+Reggae=Dancehall,Roots
+Religious
+Revival
+Rhythm & Blues
+Rhythmic Soul
+Rock & Roll=Rock & Roll,Rockabilly,Psychobilly,Neo-Rockabilly
+Rock=Rock,Pop Rock
+Samba
+Schlager
+Singer/Songwriter=Singer/Songwriter,Alternative Folk,Contemporary Folk,Contemporary Singer/Songwriter,New Acoustic
+Slow Jam
+Slow Rock
+Sonata
+Soul
+Southern Gospel
+Southern Rock
+Spoken Word
+Surf
+Symphonic Rock
+Symphony
+Tango
+Trance
+Tribal
+Trip-Hop
+Vocal
+Vocal Jaz
+World=World,Ethnic,Arabic,Israeli,World Music,Spanish,Brazilian,Brazil,Hindi,African,Sitar,Afro-Beat,Afro-Pop,Turkish,World-Fusion

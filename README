@@ -1,19 +1,7 @@
-iTunes Multi-Genre Tagger adds descriptive metadata to your music. These descriptive tags 
-are gathered from the Last.FM API (no user account necessary) and then written into the
-‘Grouping’ field of your music file(s).
-
-And wherefore? To break old habits. With the ‘Grouping’ column displayed in iTunes, this
-enables you to filter music by multiple categories, even very specific ones (i.e. "90s 
-argentina indie") from within the iTunes search feature. In this way you’ll find music
-you’d otherwise not think to listen to.
-
-Dependencies:
-rb-appscript (gem install rb-appscript)
-
-Extended from Last.FM Music Tagger by wes@633k.net
-
-TODO:
-Package gems into portable Pashua app. Gem.use_paths not behaving
+GenreFixer attempts to correct the genre of your music files. The genre are gathered
+from the Last.FM API (no user account necessary) tags and then written into the
+‘Grouping’ field of your music file(s) in iTunes. The genre will be selected by
+choosing the highest rated tag that can be linked to a set of common tags.
 
 Usage:
 Select some tracks in iTunes, then run 'ruby imgt.rb' to launch. Configure as you like,
