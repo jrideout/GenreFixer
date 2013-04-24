@@ -5,7 +5,7 @@ Alternative=Alternative,Alternative Rock
 Ambient=Ambient,Meditation
 Avantgarde
 Bebop
-Bluegrass
+Bluegrass=Banjo,Bluegrass,Folk Country
 Blues
 Blues/R&B
 Bollywood
@@ -14,7 +14,7 @@ Bossa Nova
 Bubblegum
 Celtic
 Chamber Music
-Chanson=Chanson,Chanson Francaise,Chanson Française
+Chanson=Chanson,Chanson Francaise,Chanson Française,French Pop
 Children's Music
 Chorus
 Classic Rock
@@ -25,7 +25,6 @@ Dance
 Disco
 Duet
 Electronic=Big Beat,Breakbeat,Chillout,Dark Electro,Drum And Bass,EBM,Electro,Electroclash,Electronic,Euro-House,Euro-Techno,Eurodance,House,Idm,Lounge,Minimal,Techno,Techno-Industrial,Turntableism
-Folk-Rock
 Folk=Traditional,Folklore,National Folk
 Funk
 Fusion
@@ -34,7 +33,7 @@ Grunge
 Gypsy Jazz=Gypsy Jazz,Gypsy Swing,Hot Club,Jazz Manouche,Jazz Swing,Manouche
 Hard Rock=Death Metal,Hard Rock,Metal
 Hip Hop=Gangsta,Hip Hop,Hip Hop/Rap,Instrumental Hip Hop
-Indie=Alt-Country,Americana,Indie,Indie Folk,Indie Music,Indie Pop,Indie Rock,LoFi,Post-Punk,Post-Rock,Shoegaze
+Indie=Alt-Country,Americana,Folk Rock,Indie,Indie Folk,Indie Music,Indie Pop,Indie Rock,LoFi,Post-Punk,Post-Rock,Shoegaze
 Instrumental
 J-pop
 Jazz=Big Band,Dixieland,Dixieland Jazz,Jazz,Vocal Jazz
@@ -52,8 +51,8 @@ Progressive Rock
 Psychedelic
 Psychedelic Rock
 Punk Rock
-Punk=Hardcore Punk,Punk
-R&B=R&B,Rnb
+Punk=Celtic Punk,Hardcore Punk,Punk
+R&B=R&B,R&B/Soul,Rnb
 Ragtime
 Reggae=Dancehall,Roots
 Rhythm & Blues
@@ -74,5 +73,4 @@ Tango
 Trance
 Tribal
 Trip-Hop
-Vocal
 World=Accordion,African,Afro-Beat,Afro-Pop,Arabic,Brazil,Brazilian,Ethnic,Hindi,Israeli,Polka,Sitar,Spanish,Turkish,World,World Music,World-Fusion

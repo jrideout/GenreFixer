@@ -111,16 +111,16 @@ class LastFM
     rescue Exception => e
       puts "LastFM API Error: #{e}"
     end
-    tags = parse(doc,artistName) if doc
+    tags = parse(doc,artistName,ac) if doc
     tags || []
   end
 
-  def self.parse(doc,artistName)
+  def self.parse(doc,artistName,ac)
     # assume that the tags are returned in count sorted order
     tags = REXML::XPath.match(doc, "//toptags/tag[count > #{@@minScrobs} and position()<=#{@@maxTags}]/name")
     artist = REXML::XPath.match(doc, "//toptags/@artist")
     artist = HTMLEntities.new.decode(artist) if defined?(HTMLEntities)
-    return unless Levenshtein.normalized_distance(artist,artistName) < 0.65
+    return unless Levenshtein.normalized_distance(artist,artistName) < 0.5
     tags = tags.map { |t| t.text if t.text !~ /^all$|2000|spotify/i && t.text.length < 40 }.compact
     puts %{   Found: "#{artist}" with #{tags.length} tags ...}
     puts %{    tags: #{tags.join(', ')}}
@@ -185,7 +185,7 @@ class Tagger
 
   def initialize
     @backups = {
-      'Oldies' => /^[1-6]\d[sS]/,
+      'Oldies' => /^(19)?[1-6]\d[sS]/,
       'Folk' => /^folk$/i}
     self.memoize(:findTags)
   end
@@ -230,7 +230,7 @@ class Tagger
       end
     end
     t = NormalizeTags.find(tag)
-    return '' if tag =~ /rap|danish|rumba|brooklyn|naija|ballad/i #known soundex clashes
+    return '' if tag =~ /^(rap|danish|rumba|brooklyn|naija|ballad)$/i #known soundex clashes
     return 'Reggae' if tag =~ /reggae/i;
     t
   end
