@@ -10,7 +10,11 @@ begin require 'rubygems'; rescue LoadError; end
 begin require 'htmlentities'; rescue LoadError; end
 
 require 'appscript'
+require 'json'
+require 'levenshtein'
+require 'memoize'
 require 'net/http'
+require 'set'
 require 'rexml/document'
 $:.push(File.dirname($0))
 require './vendor/Pashua/Pashua'
@@ -59,6 +63,31 @@ class NormalizeTags
   end
 end
 
+
+class ITunesStore
+  def self.getGenre(artistName)
+    puts %{  iTunes Store Query for "#{artistName}"}
+    begin
+      uri = URI("http://itunes.apple.com/search?" <<
+        "attribute=artistTerm&term=#{URI.escape(artistName)}" <<
+        "&media=music&entity=musicArtist&limit=1")
+      res = Net::HTTP.get(uri)
+      doc = JSON.parse(res)
+      if (doc['resultCount'] > 0)
+        artist = doc['results'][0]['artistName']
+        if Levenshtein.normalized_distance(artist,artistName) < 0.5
+          genre = doc['results'][0]['primaryGenreName']
+        end
+      end
+    rescue Exception => e
+      puts "iTunes Store API Error: #{e}"
+      puts e.inspect
+    end
+    puts %{   Found: "#{artist}" with genre: #{genre}} if genre
+    genre || ''
+  end
+end
+
 class LastFM
 
   @@maxTags = 20
@@ -72,88 +101,114 @@ class LastFM
     @@minScrobs = ms
   end
 
-  def self.getTags(artistName)
-    puts %{  LastFM Query for "#{artistName}"}
+  def self.getTags(artistName,ac=0)
+    puts %{  LastFM Query for "#{artistName}" autocorrect=#{ac}"}
     begin
       res = Net::HTTP.get(URI("http://ws.audioscrobbler.com/2.0/" <<
           "?method=artist.getTopTags&artist=#{URI.escape(artistName)}" <<
-          "&autocorrect=1&api_key=#{@@apiKey}"))
+          "&autocorrect=#{ac}&api_key=#{@@apiKey}"))
       doc = REXML::Document.new(res)
     rescue Exception => e
       puts "LastFM API Error: #{e}"
     end
-    parse(doc) if doc
+    tags = parse(doc,artistName) if doc
+    tags || []
   end
 
-  def self.parse(doc)
+  def self.parse(doc,artistName)
     # assume that the tags are returned in count sorted order
     tags = REXML::XPath.match(doc, "//toptags/tag[count > #{@@minScrobs} and position()<=#{@@maxTags}]/name")
     artist = REXML::XPath.match(doc, "//toptags/@artist")
     artist = HTMLEntities.new.decode(artist) if defined?(HTMLEntities)
-    puts %{  Found: "#{artist}" with #{tags.length} tags ...}
-    tags.map { |t| t.text }
+    return unless Levenshtein.normalized_distance(artist,artistName) < 0.65
+    tags = tags.map { |t| t.text if t.text !~ /^all$|2000|spotify/i && t.text.length < 40 }.compact
+    puts %{   Found: "#{artist}" with #{tags.length} tags ...}
+    puts %{    tags: #{tags.join(', ')}}
+    tags
   end
 end
 
-class Artist
-  attr_reader :name, :genre, :cached
-  @@cache = {}
 
-  def self.findArtist(*names)
+class TagSet
+
+  def initialize
+    @uniqSet = Set.new
+    @tags = []
+  end
+
+  def addTags(tags)
+    return unless tags
+    tags.each do |r|
+      t = r.strip
+      next if t == ''
+      d = t.downcase
+      @tags << t if @uniqSet.add?(d)
+    end
+  end
+
+  def to_string
+    @tags.join(' ')
+  end
+
+  def each(&blk)
+    @tags.each(&blk)
+  end
+
+end
+
+class Tagger
+
+  include Memoize
+
+  def permuteName(names)
     allNames = names
     allNames.concat names.collect { |n| n.gsub(" & ", " and ") }
     allNames.concat names.collect { |n| n.gsub(/[;\/,]| ft | feat\.? | featuring /i, " & ") }
     allNames.concat names.collect { |n| n.gsub(/ and | with /i, " & ") }
     allNames.concat names.collect { |n| n.gsub(/ vs\.? /i, " & ") }
+    allNames.concat names.collect { |n| n.gsub(/^the | the /i,' ') }
+    allNames.map! { |n| n.gsub(/\s+/,' ') }
     allNames.uniq!
-    last = Artist.new
-    allNames.each do |name|
-      a = Artist.new(name)
-      a.addTags(last.rawTags)
-      return a unless a.genre == ""
-      last = a
+    allNames.select { |n| n !~ /various/i && n.length > 1 }
+  end
+
+  def findTags(name)
+    tags = []
+    lfm = LastFM.getTags(name)
+    tags.concat lfm
+    tags.push ITunesStore.getGenre(name)
+    if lfm.length <= 5
+      tags.concat LastFM.getTags(name,1)
     end
-    last
+    tags
   end
 
-  def rawTags
-    @tags.uniq!
-    @tags
+  def initialize
+    @backups = {
+      'Oldies' => /^[1-6]\d[sS]/,
+      'Folk' => /^folk$/i}
+    self.memoize(:findTags)
   end
 
-  def addTags(tags)
-    tags.each do |t|
-      @tags << t.strip
-    end
+  def lookup(names)
+    @tags = TagSet.new
+    @genre = ''
+    allNames = self.permuteName(names)
+    allNames.each { |n| @tags.addTags(findTags(n)) }
+    puts
+    findGenre
   end
 
-  def tags
-    @tags.uniq!
-    @tags.join(' ')
+  def tagString
+    @tags.to_string()
   end
 
-  def initialize(name='')
-    @name = name
-    @genre, @backup = '', ''
-    @cached = false
-    @tags = []
-
-    return if name==''
-
-    if @@cache.include?(@name)
-      @genre, @tags = @@cache[@name]
-      @cached = true
-      puts %{  "#{@name}" found in local database, skipping last.fm query...}
-    elsif @name =~ /various/i
-      puts %{  "#{@name}" ambigious, skipping last.fm query...}
-    else
-      addTags(LastFM.getTags(@name))
-      findGenre
-      @@cache[@name] = [@genre, @tags]
-    end
+  def genreString
+    @genre
   end
 
   def findGenre()
+    @backup = []
     @tags.each do |tag|
       break if @genre != ""
       g = tagToGenre(tag)
@@ -164,45 +219,61 @@ class Artist
       end
       puts
     end
-    @genre = @backup if @genre == ""
+    @genre = @backup[0] if @genre == "" and @backup.length > 0
   end
-
   def tagToGenre(tag)
-    if tag =~ /^[1-6]\d[sS]/
-      @backup = 'Oldies'
-      puts %{  Backup: #{@backup} for #{tag}"}
-      return ''
+    @backups.each do |k,v|
+      if tag =~ v
+        @backup << k
+        puts %{  (Setting backup to: #{@backup} for #{tag})}
+        return ''
+      end
     end
     t = NormalizeTags.find(tag)
-    return '' if tag =~ /rap|spotify|danish|rumba/i #known soundex clashes
-    return 'Reggae' if t =~ /reggae/i;
+    return '' if tag =~ /rap|danish|rumba|brooklyn|naija|ballad/i #known soundex clashes
+    return 'Reggae' if tag =~ /reggae/i;
     t
   end
 end
 
-class Tagger
+class GenreFixer
 
   def initialize(setGenre=false)
     @tagged, @skipped, @indentical = 0, 0, 0
     @setGenre = setGenre
+    @tagger = Tagger.new
+    @cache = {}
+  end
+
+  def artistLookup(*names)
+    cached = true
+    hash = names.hash
+    if @cache.has_key?(hash)
+      puts %{  found in local database, skipping query...}
+    else
+      @tagger.lookup(names)
+      @cache[hash] = {'tags' => @tagger.tagString, 'genre' => @tagger.genreString}
+      cached = false
+    end
+    [@cache[hash]['genre'],@cache[hash]['tags'],cached]
   end
 
   def start
     itunes = Appscript.app('iTunes')
     itunes.selection.get.each do |track|
       puts %{======== Looking for "#{track.artist.get}" or "#{track.album_artist.get}" ========}
-      artist = Artist.findArtist(track.artist.get,track.album_artist.get)
-      if artist.tags == ""
+      genre, tags, cached = artistLookup(track.artist.get,track.album_artist.get)
+      if tags == ''
         puts %{  No tags found}
         @skipped += 1
       else
-        puts %{  Tagging as "#{artist.tags}"}
-        track.grouping.set(artist.tags)
-        if @setGenre && artist.genre != ""
-          puts %{  Setting genre to "#{artist.genre}"}
-          track.genre.set(artist.genre)
+        puts %{  Tagging as "#{tags}"}
+        track.grouping.set(tags)
+        if @setGenre && genre != ""
+          puts %{  Setting genre to "#{genre}"}
+          track.genre.set(genre)
         end
-        if artist.cached
+        if cached
           @indentical += 1
         else
           @tagged += 1
@@ -274,6 +345,5 @@ else
   LastFM.maxTags = Integer(res['maxtags'])
   LastFM.minScrobs = Integer(res['minscrobs'])
   doSetGenre = Integer(res['genre']) == 1
-  Tagger.new(doSetGenre).start
+  GenreFixer.new(doSetGenre).start
 end
-

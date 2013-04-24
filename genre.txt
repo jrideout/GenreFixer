@@ -1,63 +1,50 @@
 A Capella
-Acid
 Acid Jazz
 Acid Punk
 Alternative=Alternative,Alternative Rock
 Ambient=Ambient,Meditation
 Avantgarde
-Bass
 Bebop
 Bluegrass
 Blues
 Blues/R&B
 Bollywood
 Books & Spoken
-Booty Bass
 Bossa Nova
 Bubblegum
 Celtic
 Chamber Music
-Chanson=Chanson Francaise,Chanson,Chanson Française
-Childrenís Music
+Chanson=Chanson,Chanson Francaise,Chanson Française
+Children's Music
 Chorus
 Classic Rock
 Classical
-Comedy
+Comedy=Comedy,Humor
 Country
 Dance
-Darkwave
-Death Metal
 Disco
-Drum Solo
 Duet
-Electronic=Electronic,Idm,Turntableism,Techno,Minimal,Big Beat,Breakbeat,House,Lounge,Electroclash,Drum And Bass,Chillout,Euro-House,Euro-Techno,Eurodance,Techno-Industrial
+Electronic=Big Beat,Breakbeat,Chillout,Dark Electro,Drum And Bass,EBM,Electro,Electroclash,Electronic,Euro-House,Euro-Techno,Eurodance,House,Idm,Lounge,Minimal,Techno,Techno-Industrial,Turntableism
 Folk-Rock
-Folk=Folk,Folklore
+Folk=Traditional,Folklore,National Folk
 Funk
 Fusion
-Gospel
-Gothic
-Gothic Rock
+Gospel=Gospel,Southern Gospel
 Grunge
-Gypsy Jazz=Gypsy Jazz,Manouche,Jazz Manouche,Jazz Swing,Gypsy Swing,Hot Club
-Hard Rock
-Hip Hop=Hip Hop,Hip Hop/Rap,Instrumental Hip Hop,Gangsta
-Holiday
-Humor
-Indie=Indie,Indie Rock,Indie Pop,Shoegaze,Post-Rock,Americana,Alt-Country,LoFi,Post-Punk,Indie Music
-Industrial
+Gypsy Jazz=Gypsy Jazz,Gypsy Swing,Hot Club,Jazz Manouche,Jazz Swing,Manouche
+Hard Rock=Death Metal,Hard Rock,Metal
+Hip Hop=Gangsta,Hip Hop,Hip Hop/Rap,Instrumental Hip Hop
+Indie=Alt-Country,Americana,Indie,Indie Folk,Indie Music,Indie Pop,Indie Rock,LoFi,Post-Punk,Post-Rock,Shoegaze
 Instrumental
 J-pop
-Jazz=Jazz,Big Band,Dixieland,Dixieland Jazz
+Jazz=Big Band,Dixieland,Dixieland Jazz,Jazz,Vocal Jazz
 Klezmer
-Latin=Latin,Cuban,Cuba
-Metal
+Latin=Cuba,Cuban,Latin,Salsa
 Musical=Musical,Showtunes
-National Folk
 Native American
 New Age
-New Wave
-Oldies=Oldies,Doo Wop
+New Wave=New Wave,Darkwave
+Oldies=Doo Wop,Oldies
 Opera=Opera,Operetta
 Pop=Pop,Pop Music,Sundazed
 Power Ballad
@@ -69,23 +56,18 @@ Punk=Hardcore Punk,Punk
 R&B=R&B,Rnb
 Ragtime
 Reggae=Dancehall,Roots
-Religious
-Revival
 Rhythm & Blues
-Rhythmic Soul
-Rock & Roll=Rock & Roll,Rockabilly,Psychobilly,Neo-Rockabilly
-Rock=Rock,Pop Rock
+Rock & Roll=Neo-Rockabilly,Pop Rockabilly,Psychobilly,Rock & Roll,Rockabilly
+Rock=Gothic Rock,Pop Rock,Rock
 Samba
 Schlager
-Singer/Songwriter=Singer/Songwriter,Alternative Folk,Contemporary Folk,Contemporary Singer/Songwriter,New Acoustic
-Slow Jam
+Singer/Songwriter=Alternative Folk,Contemporary Folk,Contemporary Singer/Songwriter,New Acoustic,Singer/Songwriter
 Slow Rock
 Sonata
 Soul
-Southern Gospel
 Southern Rock
 Spoken Word
-Surf
+Surf=Surf,Surf Rock,Surf Tunes
 Symphonic Rock
 Symphony
 Tango
@@ -93,5 +75,4 @@ Trance
 Tribal
 Trip-Hop
 Vocal
-Vocal Jaz
-World=World,Ethnic,Arabic,Israeli,World Music,Spanish,Brazilian,Brazil,Hindi,African,Sitar,Afro-Beat,Afro-Pop,Turkish,World-Fusion
+World=Accordion,African,Afro-Beat,Afro-Pop,Arabic,Brazil,Brazilian,Ethnic,Hindi,Israeli,Polka,Sitar,Spanish,Turkish,World,World Music,World-Fusion
