@@ -230,7 +230,7 @@ class Tagger
       end
     end
     t = NormalizeTags.find(tag)
-    return '' if tag =~ /^(rap|danish|rumba|brooklyn|naija|ballad)$/i #known soundex clashes
+    return '' if tag =~ /^(rap|danish|rumba|brooklyn|naija|noise|ballad)$/i #known soundex clashes
     return 'Reggae' if tag =~ /reggae/i;
     t
   end
