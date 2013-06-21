@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 # GenreFixer
 #
 # GenreFixer attempts to correct the genre of your music files. The genre are gathered
