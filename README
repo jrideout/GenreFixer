@@ -4,5 +4,5 @@ from the Last.FM API (no user account necessary) tags and then written into the
 choosing the highest rated tag that can be linked to a set of common tags.
 
 Usage:
-Select some tracks in iTunes, then run 'ruby imgt.rb' to launch. Configure as you like,
+Select some tracks in iTunes, then run 'ruby genrefixer.rb' to launch. Configure as you like,
 then click Get Tags!
